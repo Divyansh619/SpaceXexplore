@@ -20,7 +20,6 @@ const AuthPage = () => {
   const { isAuthenticated } = useAppStore();
   const theme = useMantineTheme();
 
-  // Redirect to dashboard if already authenticated
   if (isAuthenticated) {
     return <Navigate to="/" />;
   }
@@ -28,23 +27,36 @@ const AuthPage = () => {
   const toggleForm = () => setIsLogin(!isLogin);
 
   return (
-    <Container size="lg" py="xl">
+    <Container size="lg" style={{ height: "100vh" }}>
       <Flex
         direction={{ base: "column", md: "row" }}
         gap="lg"
-        align={{ md: "center" }}
+        align="center"
+        justify="center"
+        style={{ height: "100%" }}
       >
-        <Stack style={{ flex: 1 }} h="100%" justify="center" spacing="xl">
+        <Stack 
+          style={{ flex: 1, maxWidth: "400px" }} 
+          justify="center" 
+          spacing="xl"
+          align="center"
+        >
           <IconRocket size={64} color={theme.colors.blue[6]} stroke={1.5} />
-          <Title>SpaceX Explorer</Title>
-          <Text size="lg">
+          <Title align="center">SpaceX Explorer</Title>
+          <Text size="lg" align="center">
             Discover the fascinating world of SpaceX rockets and launches. Sign
             in to access detailed information, track launches, and explore the
             SpaceX mission archive.
           </Text>
         </Stack>
 
-        <Paper style={{ flex: 1 }} shadow="md" p={30} radius="md" withBorder>
+        <Paper 
+          style={{ flex: 1, maxWidth: "400px" }} 
+          shadow="md" 
+          p={30} 
+          radius="md" 
+          withBorder
+        >
           {isLogin ? (
             <LoginForm onToggleForm={toggleForm} />
           ) : (
