@@ -89,9 +89,9 @@ export default function LoginForm({ onToggleForm }: LoginFormProps) {
         </Anchor>
       </Text>
 
-      <Text size="xs" c="dimmed" ta="center" mt="sm">
+{/*       <Text size="xs" c="dimmed" ta="center" mt="sm">
         Demo credentials: demo@example.com / password123
-      </Text>
+      </Text> */}
     </Box>
   );
 }
