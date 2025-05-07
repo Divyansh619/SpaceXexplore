@@ -49,7 +49,7 @@ export default function LoginForm({ onToggleForm }: LoginFormProps) {
         <Alert
           icon={<IconAlertCircle size={16} />}
           title="Error"
-          color="red"
+          color="error.6"
           mb="md"
           onClose={clearError}
         >

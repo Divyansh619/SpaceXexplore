@@ -78,13 +78,14 @@ const data: NavLinkData[] = [
   },
 ];
 
-export function MainNavigation() {
+export function MainNavigation({ onNavigate }: { onNavigate?: () => void }) {
   const { classes, cx } = useStyles();
 
   const links = data.map((item) => (
     <NavLink
       to={item.path}
       key={item.label}
+      onClick={onNavigate}
       className={({ isActive }) =>
         cx(classes.link, { [classes.linkActive]: isActive })
       }

@@ -12,6 +12,7 @@ import {
   Loader,
   Center,
   Stack,
+  Image,
 } from "@mantine/core";
 import { useDebouncedValue } from "@mantine/hooks";
 import {
@@ -98,7 +99,7 @@ export function RocketsList() {
   };
 
   return (
-    <Stack spacing="md">
+    <Stack spacing="md" pb={{ base: 80, sm: 0 }}>
       <Group position="apart">
         <Text size="xl" weight={700}>
           SpaceX Rockets
@@ -155,8 +156,12 @@ export function RocketsList() {
       </Group>
 
       {isLoading ? (
-        <Center h={200}>
-          <Loader />
+        <Center h={400}>
+          <Image
+            src="https://cdn.pixabay.com/animation/2022/07/31/06/27/06-27-17-124_512.gif"
+            alt="Loading..."
+            width={300}
+          />
         </Center>
       ) : isError ? (
         <Text color="red" align="center">

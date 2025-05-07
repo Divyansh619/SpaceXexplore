@@ -7,7 +7,7 @@ const MOCK_USERS = [
   {
     id: "1",
     email: "demo@example.com",
-    password: "password123",
+    password: "123456",
     name: "Demo User",
   },
 ];

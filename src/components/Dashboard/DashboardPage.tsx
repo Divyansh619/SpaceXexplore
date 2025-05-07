@@ -13,6 +13,7 @@ import {
   Grid,
   List,
   ThemeIcon,
+  Skeleton,
 } from "@mantine/core";
 import {
   IconRocket,
@@ -31,12 +32,14 @@ import { LaunchCard } from "../launches/LaunchCard";
 export function DashboardPage() {
   const navigate = useNavigate();
 
-  const { data: rocketData } = useQuery(["dashboard-rockets"], () =>
-    getRockets()
+  const { data: rocketData, isLoading: isRocketLoading } = useQuery(
+    ["dashboard-rockets"],
+    () => getRockets()
   );
 
-  const { data: launchData } = useQuery(["dashboard-launches"], () =>
-    getLaunches()
+  const { data: launchData, isLoading: isLaunchLoading } = useQuery(
+    ["dashboard-launches"],
+    () => getLaunches()
   );
 
   // Calculate some statistics for the dashboard
@@ -173,7 +176,7 @@ export function DashboardPage() {
             Scheduled launches
           </Text>
 
-          <List spacing="sm" mt="md">
+          <List size="sm" spacing="sm" mt="md">
             {launchData?.data
               .filter((l: any) => l.upcoming)
               .slice(0, 3)
@@ -216,9 +219,15 @@ export function DashboardPage() {
               spacing="md"
               breakpoints={[{ maxWidth: "sm", cols: 1 }]}
             >
-              {rocketData?.data.slice(0, 2).map((rocket: any) => (
-                <RocketCard key={rocket.id} rocket={rocket} />
-              ))}
+              {isRocketLoading
+                ? Array.from({ length: 2 }).map((_, i) => (
+                    <Skeleton key={i} height={150} radius="md" />
+                  ))
+                : rocketData?.data
+                    .slice(0, 2)
+                    .map((rocket: any) => (
+                      <RocketCard key={rocket.id} rocket={rocket} />
+                    ))}
             </SimpleGrid>
           </Paper>
         </Grid.Col>
@@ -241,9 +250,15 @@ export function DashboardPage() {
               spacing="md"
               breakpoints={[{ maxWidth: "sm", cols: 1 }]}
             >
-              {launchData?.data.slice(0, 2).map((launch) => (
-                <LaunchCard key={launch.id} launch={launch} />
-              ))}
+              {isLaunchLoading
+                ? Array.from({ length: 2 }).map((_, i) => (
+                    <Skeleton key={i} height={150} radius="md" />
+                  ))
+                : launchData?.data
+                    .slice(0, 2)
+                    .map((launch) => (
+                      <LaunchCard key={launch.id} launch={launch} />
+                    ))}
             </SimpleGrid>
           </Paper>
         </Grid.Col>

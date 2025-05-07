@@ -13,6 +13,7 @@ import {
   Divider,
   Badge,
   Tooltip,
+  Skeleton,
 } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import { getRockets, getLaunches } from "../../api/spacex";
@@ -27,8 +28,14 @@ import {
 export function StatisticsPage() {
   const [yearFilter, setYearFilter] = useState<string>("all");
 
-  const { data: rockets } = useQuery(["rockets-stats"], () => getRockets());
-  const { data: launches } = useQuery(["launches-stats"], () => getLaunches());
+  const { data: rockets, isLoading: isLoadingRockets } = useQuery(
+    ["rockets-stats"],
+    () => getRockets()
+  );
+  const { data: launches, isLoading: isLoadingLaunches } = useQuery(
+    ["launches-stats"],
+    () => getLaunches()
+  );
 
   const currentYear = new Date().getFullYear();
   const yearOptions = [
@@ -85,7 +92,7 @@ export function StatisticsPage() {
           value={yearFilter}
           onChange={(value) => setYearFilter(value || "all")}
           data={yearOptions}
-          w={160}
+          w={{ base: "100%", sm: "auto" }}
         />
       </Group>
 
@@ -97,32 +104,47 @@ export function StatisticsPage() {
           { maxWidth: "xs", cols: 1 },
         ]}
       >
-        <StatCard
-          label="Total Launches"
-          value={totalLaunches}
-          subLabel={yearFilter === "all" ? "All time" : `in ${yearFilter}`}
-        />
-        <StatCard
-          label="Success Rate"
-          value={`${successRate}%`}
-          subLabel={`${successfulLaunches} successful`}
-          icon={<IconCircleCheck size={20} color="green" />}
-        />
-        <StatCard
-          label="Failed Launches"
-          value={failedLaunches}
-          subLabel={`${(
-            (failedLaunches / (successfulLaunches + failedLaunches)) *
-            100
-          ).toFixed(1)}% failure rate`}
-          icon={<IconCircleX size={20} color="red" />}
-        />
-        <StatCard
-          label="Upcoming"
-          value={upcomingLaunches}
-          subLabel="Scheduled launches"
-          icon={<IconClock size={20} color="blue" />}
-        />
+        {isLoadingRockets || isLoadingLaunches ? (
+          <>
+            <Skeleton height={100} radius="md" />
+            <Skeleton height={100} radius="md" />
+            <Skeleton height={100} radius="md" />
+            <Skeleton height={100} radius="md" />
+          </>
+        ) : (
+          <>
+            <StatCard
+              label="Total Launches"
+              value={totalLaunches}
+              subLabel={yearFilter === "all" ? "All time" : `in ${yearFilter}`}
+            />
+            <StatCard
+              label="Success Rate"
+              value={`${successRate}%`}
+              subLabel={`${successfulLaunches} successful`}
+              icon={<IconCircleCheck size={20} color="green" />}
+            />
+            <StatCard
+              label="Failed Launches"
+              value={failedLaunches}
+              subLabel={
+                successfulLaunches + failedLaunches === 0
+                  ? "N/A"
+                  : `${(
+                      (failedLaunches / (successfulLaunches + failedLaunches)) *
+                      100
+                    ).toFixed(1)}% failure rate`
+              }
+              icon={<IconCircleX size={20} color="red" />}
+            />
+            <StatCard
+              label="Upcoming"
+              value={upcomingLaunches}
+              subLabel="Scheduled launches"
+              icon={<IconClock size={20} color="blue" />}
+            />
+          </>
+        )}
       </SimpleGrid>
 
       <Divider label="Rocket-wise Performance" labelPosition="center" my="md" />
@@ -135,60 +157,73 @@ export function StatisticsPage() {
           { maxWidth: "xs", cols: 1 },
         ]}
       >
-        {launchesByRocket?.slice(0, 6).map((rocket) => (
-          <Paper
-            key={rocket.rocketId}
-            withBorder
-            shadow="sm"
-            radius="md"
-            p="md"
-          >
-            <Group position="apart" mb="xs">
-              <Title order={4}>{rocket.rocketName}</Title>
-              <Badge variant="light" color="gray">
-                {rocket.totalLaunches} launches
-              </Badge>
-            </Group>
-            <Group position="center" mt="md">
-              <RingProgress
-                size={120}
-                thickness={12}
-                roundCaps
-                sections={[
-                  {
-                    value:
-                      (rocket.successful / rocket.totalLaunches) * 100 || 0,
-                    color: "green",
-                  },
-                  {
-                    value: (rocket.failed / rocket.totalLaunches) * 100 || 0,
-                    color: "red",
-                  },
-                  {
-                    value: (rocket.upcoming / rocket.totalLaunches) * 100 || 0,
-                    color: "blue",
-                  },
-                ]}
-                label={
-                  <Center>
-                    <Text fw={700} ta="center" size="lg">
-                      {rocket.totalLaunches}
-                    </Text>
-                  </Center>
-                }
-              />
-            </Group>
-            <Stack mt="md" spacing={6}>
-              <StatItem
-                label="Successful"
-                value={rocket.successful}
-                color="green"
-              />
-              <StatItem label="Failed" value={rocket.failed} color="red" />
-              <StatItem label="Upcoming" value={rocket.upcoming} color="blue" />
-            </Stack>
-          </Paper>
-        ))}
+        {isLoadingRockets || isLoadingLaunches ? (
+          <>
+            <Skeleton height={200} radius="md" />
+            <Skeleton height={200} radius="md" />
+            <Skeleton height={200} radius="md" />
+          </>
+        ) : (
+          launchesByRocket?.slice(0, 6).map((rocket) => (
+            <Paper
+              key={rocket.rocketId}
+              withBorder
+              shadow="sm"
+              radius="md"
+              p="md"
+            >
+              <Group position="apart" mb="xs">
+                <Title order={4}>{rocket.rocketName}</Title>
+                <Badge variant="light" color="gray">
+                  {rocket.totalLaunches} launches
+                </Badge>
+              </Group>
+              <Group position="center" mt="md">
+                <RingProgress
+                  size={120}
+                  thickness={12}
+                  roundCaps
+                  sections={[
+                    {
+                      value:
+                        (rocket.successful / rocket.totalLaunches) * 100 || 0,
+                      color: "green",
+                    },
+                    {
+                      value: (rocket.failed / rocket.totalLaunches) * 100 || 0,
+                      color: "red",
+                    },
+                    {
+                      value:
+                        (rocket.upcoming / rocket.totalLaunches) * 100 || 0,
+                      color: "blue",
+                    },
+                  ]}
+                  label={
+                    <Center>
+                      <Text fw={700} ta="center" size="lg">
+                        {rocket.totalLaunches}
+                      </Text>
+                    </Center>
+                  }
+                />
+              </Group>
+              <Stack mt="md" spacing={6}>
+                <StatItem
+                  label="Successful"
+                  value={rocket.successful}
+                  color="green"
+                />
+                <StatItem label="Failed" value={rocket.failed} color="red" />
+                <StatItem
+                  label="Upcoming"
+                  value={rocket.upcoming}
+                  color="blue"
+                />
+              </Stack>
+            </Paper>
+          ))
+        )}
       </SimpleGrid>
     </Stack>
   );

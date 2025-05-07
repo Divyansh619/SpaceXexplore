@@ -71,7 +71,11 @@ export function RocketDetail() {
   if (isLoadingRocket) {
     return (
       <Center h={400}>
-        <Loader size="lg" />
+        <Image
+          src="https://cdn.pixabay.com/animation/2022/07/31/06/27/06-27-17-124_512.gif"
+          alt="Loading..."
+          width={300}
+        />
       </Center>
     );
   }
@@ -266,9 +270,13 @@ export function RocketDetail() {
       <Divider my="lg" label="Launches" labelPosition="center" />
 
       {isLoadingLaunches ? (
-        <Center h={150}>
-          <Loader />
-        </Center>
+         <Center h={400}>
+         <Image
+           src="https://cdn.pixabay.com/animation/2022/07/31/06/27/06-27-17-124_512.gif"
+           alt="Loading..."
+           width={300}
+         />
+       </Center>
       ) : isErrorLaunches ? (
         <Text color="red" align="center">
           Error loading launches

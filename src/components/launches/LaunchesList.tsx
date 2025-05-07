@@ -13,6 +13,7 @@ import {
   Center,
   Stack,
   Paper,
+  Image,
 } from "@mantine/core";
 
 import { useDebouncedValue } from "@mantine/hooks";
@@ -121,7 +122,6 @@ export function LaunchesList() {
   const handlePageChange = (page: number) => {
     setFilters({ ...filters, page });
     window.scrollTo({ top: 0, behavior: "smooth" });
-
   };
 
   const handleDateRangeChange = (range: [Date | null, Date | null]) => {
@@ -240,8 +240,12 @@ export function LaunchesList() {
       </Paper> */}
 
       {isLoading ? (
-        <Center h={200}>
-          <Loader />
+        <Center h={300}>
+          <Image
+            src="https://cdn.pixabay.com/animation/2022/07/31/06/27/06-27-17-124_512.gif"
+            alt="Loading..."
+            width={300}
+          />
         </Center>
       ) : isError ? (
         <Text color="red" align="center">

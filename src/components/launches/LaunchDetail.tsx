@@ -78,8 +78,12 @@ export function LaunchDetail() {
 
   if (isLoadingLaunch) {
     return (
-      <Center h={400}>
-        <Loader size="lg" />
+      <Center h={300}>
+        <Image
+          src="https://cdn.pixabay.com/animation/2022/07/31/06/27/06-27-17-124_512.gif"
+          alt="Loading..."
+          width={300}
+        />
       </Center>
     );
   }
@@ -181,7 +185,11 @@ export function LaunchDetail() {
                 </SimpleGrid>
               )}
 
-              <Group position="center" mt="md" spacing={{ base: "xs", sm: "md" }}>
+              <Group
+                position="center"
+                mt="md"
+                spacing={{ base: "xs", sm: "md" }}
+              >
                 {launch.links.webcast && (
                   <Button
                     component="a"
@@ -248,11 +256,7 @@ export function LaunchDetail() {
                   "No detailed description available for this launch."}
               </Text>
 
-              <Divider
-                my="md"
-                label="Mission Details"
-                labelPosition="center"
-              />
+              <Divider my="md" label="Mission Details" labelPosition="center" />
 
               <Grid gutter={{ base: "xs", sm: "md" }}>
                 <Grid.Col xs={12} sm={6}>
@@ -265,7 +269,9 @@ export function LaunchDetail() {
                       <Loader size="sm" ml={26} mt="xs" />
                     ) : rocket ? (
                       <Group ml={26} mt="xs" spacing="xs">
-                        <Text size={{ base: "sm", sm: "md" }}>{rocket.name}</Text>
+                        <Text size={{ base: "sm", sm: "md" }}>
+                          {rocket.name}
+                        </Text>
                         <Button
                           component={Link}
                           to={`/rockets/${rocket.id}`}
@@ -291,7 +297,9 @@ export function LaunchDetail() {
                       <Loader size="sm" ml={26} mt="xs" />
                     ) : launchpad ? (
                       <Stack ml={26} mt="xs" spacing={5}>
-                        <Text size={{ base: "sm", sm: "md" }}>{launchpad.name}</Text>
+                        <Text size={{ base: "sm", sm: "md" }}>
+                          {launchpad.name}
+                        </Text>
                         <Text size="sm" color="dimmed">
                           {launchpad.locality}, {launchpad.region}
                         </Text>
@@ -305,7 +313,7 @@ export function LaunchDetail() {
                 </Grid.Col>
 
                 <Grid.Col xs={12} sm={6}>
-                  <Card withBorder padding="sm" h="100%">
+                  <Card withBorder padding="sm" h="100%" p="lg">
                     <Text weight={500} mb="sm">
                       Mission Status
                     </Text>
@@ -361,13 +369,9 @@ export function LaunchDetail() {
                 </Grid.Col>
               </Grid>
 
-              <Divider
-                my="md"
-                label="External Links"
-                labelPosition="center"
-              />
+              <Divider my="md" label="External Links" labelPosition="center" />
 
-              <SimpleGrid 
+              <SimpleGrid
                 cols={{ base: 1, xs: 2, sm: 3 }}
                 spacing={{ base: "xs", sm: "md" }}
               >

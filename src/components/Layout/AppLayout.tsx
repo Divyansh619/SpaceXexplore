@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import {
   AppShell,
   Burger,
@@ -27,18 +27,23 @@ export const AppLayout = () => {
   useEffect(() => {
     if (opened) {
       // Disable scrolling when the sidebar is open
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
       // Enable scrolling when the sidebar is closed
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     }
 
     // Cleanup the effect when the component is unmounted
     return () => {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     };
   }, [opened]);
 
+  const location = useLocation();
+  useEffect(() => {
+    // Close sidebar on route change (mainly for mobile)
+    setOpened(false);
+  }, [location.pathname]);
   return (
     <AppShell
       padding="md"
@@ -55,8 +60,15 @@ export const AppLayout = () => {
               hidden={!opened}
               style={{ zIndex: 200 }}
             >
-              <Navbar.Section grow>
-                <MainNavigation />
+              <Navbar.Section
+                grow
+                style={{
+                  overflowY: "auto",
+                  maxHeight: "70vh",
+                  marginTop: "30px",
+                }}
+              >
+                <MainNavigation onNavigate={() => setOpened(false)} />
               </Navbar.Section>
             </Navbar>
           </MediaQuery>
@@ -96,19 +108,31 @@ export const AppLayout = () => {
                   }}
                 >
                   <Group position="right" mb="sm">
-                    <ActionIcon variant="light" color="red" onClick={() => setOpened(false)}>
+                    <ActionIcon
+                      variant="light"
+                      color="red"
+                      onClick={() => setOpened(false)}
+                    >
                       <IconX size={20} />
                     </ActionIcon>
                   </Group>
 
-                  {/* Main Navigation */}
-                  <Navbar.Section grow>
+                  {/* Main Navigation with scroll and reduced height */}
+                  <Navbar.Section
+                    grow
+                    style={{
+                      overflowY: "auto",
+                      maxHeight: "70vh",
+                      marginTop: "30px",
+                    }}
+                  >
                     <MainNavigation />
                   </Navbar.Section>
 
-                  {/* User name at the bottom */}
-                  <Navbar.Section style={{ marginTop: "auto" }}>
-                    {/* Menu with Logout Option */}
+                  {/* User name at the bottom with spacing */}
+                  <Navbar.Section
+                    style={{ marginTop: "auto", paddingBottom: "4rem" }}
+                  >
                     <Menu position="bottom-end" shadow="md" width={200}>
                       <Menu.Target>
                         <UnstyledButton>
@@ -147,7 +171,12 @@ export const AppLayout = () => {
       }
       header={
         <Header height={60} style={{ zIndex: 201 }}>
-          <Group h="100%" px={{ base: 10, sm: 20 }} position="apart" align="center">
+          <Group
+            h="100%"
+            px={{ base: 10, sm: 20 }}
+            position="apart"
+            align="center"
+          >
             <Group>
               {/* Hamburger in Header on Mobile */}
               <MediaQuery largerThan="sm" styles={{ display: "none" }}>
@@ -205,7 +234,9 @@ export const AppLayout = () => {
         </Header>
       }
     >
-      <Outlet />
+      <Box sx={{ '@media (max-width: 768px)': { marginTop: '20px' } }}>
+    <Outlet />
+  </Box>
     </AppShell>
   );
 };
