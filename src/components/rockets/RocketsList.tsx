@@ -94,6 +94,7 @@ export function RocketsList() {
 
   const handlePageChange = (page: number) => {
     setFilters({ ...filters, page });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
@@ -115,6 +116,7 @@ export function RocketsList() {
 
         <Select
           placeholder="Status"
+          w={{ base: "100%", sm: "auto" }}
           value={filters.status}
           onChange={handleStatusChange}
           data={[
@@ -127,6 +129,7 @@ export function RocketsList() {
 
         <Select
           placeholder="Sort by"
+          w={{ base: "100%", sm: "auto" }}
           value={filters.sort}
           onChange={handleSortChange}
           data={[

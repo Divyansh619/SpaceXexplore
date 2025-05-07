@@ -36,7 +36,7 @@ const useStyles = createStyles((theme) => ({
     "&, &:hover": {
       backgroundColor: theme.fn.variant({
         variant: "light",
-        color: theme.primaryColor,
+        color: "theme.primaryColor",
       }).background,
       color: theme.fn.variant({ variant: "light", color: theme.primaryColor })
         .color,

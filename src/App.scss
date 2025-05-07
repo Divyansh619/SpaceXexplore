@@ -1,20 +1,31 @@
+/* Global reset for margin and padding */
 * {
 	margin: 0;
 	padding: 0;
-	body {
-		h1 {
-			font-size: clamp(2.5rem, 4vw, 4rem);
-			font-weight: 500;
-		}
-		h2 {
-			font-size: clamp(1.5rem, 2.5vw, 4rem);
-		}
-		h3 {
-			font-size: clamp(1.2rem, 1.8vw, 3rem);
-		}
-		p {
-			font-size: clamp(1.1rem, 1.2vw, 2rem);
-		}
-	}
-}
-
+	box-sizing: border-box;
+  }
+  
+  body {
+	font-family: 'Open Sans', sans-serif; /* Apply Open Sans globally */
+  }
+  
+  /* Example of using Open Sans */
+  h1 {
+	font-size: clamp(2.5rem, 4vw, 4rem);
+	font-weight: 500;
+  }
+  
+  h2 {
+	font-size: clamp(1.5rem, 2.5vw, 4rem);
+  }
+  
+  /* Example of using Style Script font */
+  h3 {
+	font-family: 'Style Script', cursive; /* Apply Style Script for h3 */
+	font-size: clamp(1.2rem, 1.8vw, 3rem);
+  }
+  
+  p {
+	font-size: clamp(1.1rem, 1.2vw, 2rem);
+  }
+  

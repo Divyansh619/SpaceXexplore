@@ -33,14 +33,14 @@ export function LaunchCard({ launch }: LaunchCardProps) {
     <Card shadow="sm" padding="lg" radius="md" withBorder>
       <Card.Section>
         <Image
-          src={
+           src={
             launch.links.patch.small ||
             launch.links.flickr.original[0] ||
-            "https://via.placeholder.com/500x300?text=No+Image"
+            "https://www.spacex.com/static/images/locations/kennedy.jpg"
           }
           height={140}
           alt={launch.name}
-          fit="contain"
+          // fit="contain"
           bg="gray.1"
           p="sm"
         />

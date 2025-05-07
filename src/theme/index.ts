@@ -6,12 +6,12 @@ export const theme: MantineThemeOverride = {
 	primaryShade: 6,
 	fontFamily: 'Outfit,sans-serif',
 	fontFamilyMonospace: 'Monaco, Courier, monospace',
-	fontSizes: { // 16px
-		xs: '1rem', // 12px
-		sm: '1rem', // 14px
-		md: '1.25rem', // 16px
-		lg: '1.5rem', // 18px
-		xl: '1.8rem' // 20px
+	fontSizes: { 
+		xs: '0.875rem', // 14px
+		sm: '0.875rem', // 14px
+		md: '1rem', // 16px
+		lg: '1.25rem', // 18px
+		xl: '1.5rem' // 20px
 	},
 	breakpoints: {
 		xs: '30em',
@@ -20,19 +20,12 @@ export const theme: MantineThemeOverride = {
 		lg: '74em',
 		xl: '90em',
 	},
-	// radius: {
-	// 	xs: '0.25rem',
-	// 	sm: '0.375rem',
-	// 	md: '0.5rem',
-	// 	lg: '0.75rem',
-	// 	xl: '1rem'
-	// },
 	spacing: {
-		xs: '0.25rem',
-		sm: '0.5rem',
-		md: '0.75rem',
-		lg: '1rem',
-		xl: '1.25rem'
+		xs: '0.2rem', // 3px
+		sm: '0.4rem', // 6px
+		md: '0.6rem', // 9px
+		lg: '0.8rem', // 12px
+		xl: '1rem' // 16px
 	},
 	shadows: {
 		xs: '0.25rem',
@@ -45,23 +38,23 @@ export const theme: MantineThemeOverride = {
 		fontFamily: 'Outfit,sans-serif;',
 		sizes: {
 			h1: {
-				fontSize: '2.1rem',
+				fontSize: '1.75rem', // 28px
 				fontWeight: '700',
 			},
 			h2: {
-				fontSize: '1.9rem',
+				fontSize: '1.5rem', // 24px
 				fontWeight: '2.5rem'
 			},
 			h3: {
-				fontSize: '1.75rem',
+				fontSize: '1.25rem', // 20px
 				fontWeight: '2.5rem'
 			},
 			h4: {
-				fontSize: '1.5rem',
+				fontSize: '1.1rem', // 18px
 				fontWeight: '500'
 			},
 			h5: {
-				fontSize: '1.2rem',
+				fontSize: '1rem', // 16px
 				fontWeight: '500'
 			}
 		}
@@ -70,7 +63,7 @@ export const theme: MantineThemeOverride = {
 		TextInput: {
 			styles: {
 				label: {
-					fontSize: '1rem',
+					fontSize: '0.875rem', // 14px
 					color: '#DCE7FCFF',
 				},
 				input: {
@@ -82,7 +75,7 @@ export const theme: MantineThemeOverride = {
 		Select: {
 			styles: {
 				label: {
-					fontSize: '1rem',
+					fontSize: '0.875rem', // 14px
 					color: '#DCE7FCFF',
 				},
 				input: {
@@ -95,7 +88,7 @@ export const theme: MantineThemeOverride = {
 			styles: {
 				root: {
 					img: {
-						filter: "blur(12px)"
+						filter: "blur(8px)" // Reduced blur
 					}
 				}
 			}

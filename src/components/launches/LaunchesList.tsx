@@ -120,6 +120,8 @@ export function LaunchesList() {
 
   const handlePageChange = (page: number) => {
     setFilters({ ...filters, page });
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
   };
 
   const handleDateRangeChange = (range: [Date | null, Date | null]) => {
@@ -161,6 +163,7 @@ export function LaunchesList() {
 
         <Select
           placeholder="Status"
+          w={{ base: "100%", sm: "auto" }}
           value={filters.status}
           onChange={handleStatusChange}
           data={[
@@ -174,6 +177,7 @@ export function LaunchesList() {
 
         <Select
           placeholder="Rocket"
+          w={{ base: "100%", sm: "auto" }}
           value={filters.rocket}
           onChange={handleRocketChange}
           data={[
@@ -188,6 +192,7 @@ export function LaunchesList() {
 
         <Select
           placeholder="Sort by"
+          w={{ base: "100%", sm: "auto" }}
           value={filters.sort}
           onChange={handleSortChange}
           data={[
@@ -212,7 +217,7 @@ export function LaunchesList() {
         </Button>
       </Group>
 
-      <Paper p="md" withBorder mb="md">
+      {/* <Paper p="md" withBorder mb="md">
         <Group position="apart">
           <Group>
             <IconCalendar size={16} />
@@ -226,13 +231,13 @@ export function LaunchesList() {
           )}
         </Group>
 
-        {/* <DateRangePicker
+        <DateRangePicker
           value={dateRange}
           onChange={handleDateRangeChange}
           mx="auto"
           mt="sm"
-        /> */}
-      </Paper>
+        />
+      </Paper> */}
 
       {isLoading ? (
         <Center h={200}>

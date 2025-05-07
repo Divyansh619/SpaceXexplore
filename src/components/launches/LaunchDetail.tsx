@@ -20,6 +20,9 @@ import {
   Paper,
   List,
   ThemeIcon,
+  Container,
+  MediaQuery,
+  Box,
 } from "@mantine/core";
 import {
   IconCalendar,
@@ -131,248 +134,289 @@ export function LaunchDetail() {
   };
 
   return (
-    <Stack spacing="lg">
-      <Breadcrumbs>{items}</Breadcrumbs>
+    <Container size="xl" px={{ base: "xs", sm: "md" }}>
+      <Stack spacing="lg">
+        <MediaQuery smallerThan="xs" styles={{ display: "none" }}>
+          <Breadcrumbs>{items}</Breadcrumbs>
+        </MediaQuery>
 
-      <Button
-        component={Link}
-        to="/launches"
-        variant="subtle"
-        leftIcon={<IconChevronLeft size={16} />}
-        sx={{ width: "fit-content" }}
-      >
-        Back to Launches
-      </Button>
+        <Button
+          component={Link}
+          to="/launches"
+          variant="subtle"
+          leftIcon={<IconChevronLeft size={16} />}
+          sx={{ width: "fit-content" }}
+        >
+          Back to Launches
+        </Button>
 
-      <Grid>
-        <Grid.Col span={4}>
-          <Paper withBorder p="md">
-            <Image
-              src={
-                launch.links.patch.large ||
-                launch.links.flickr.original[0] ||
-                "https://via.placeholder.com/400x400?text=No+Image"
-              }
-              alt={launch.name}
-              radius="md"
-              fit="contain"
-              height={250}
-              bg="gray.1"
-            />
+        <Grid gutter={{ base: "sm", sm: "lg" }}>
+          {/* Image and media section - full width on mobile */}
+          <Grid.Col xs={12} md={4}>
+            <Paper withBorder p="md">
+              <Image
+                src={
+                  launch.links.patch.large ||
+                  launch.links.flickr.original[0] ||
+                  "https://www.spacex.com/static/images/locations/kennedy.jpg"
+                }
+                alt={launch.name}
+                radius="md"
+                fit="contain"
+                height={250}
+                bg="gray.1"
+              />
 
-            {launch.links.flickr.original.length > 0 && (
-              <SimpleGrid cols={3} mt="xs" spacing="xs">
-                {launch.links.flickr.original.slice(0, 3).map((img, i) => (
-                  <Image
-                    key={i}
-                    src={img}
-                    alt={`Launch image ${i + 1}`}
-                    radius="sm"
-                    height={80}
-                  />
-                ))}
-              </SimpleGrid>
-            )}
-
-            <Group position="center" mt="md" spacing="md">
-              {launch.links.webcast && (
-                <Button
-                  component="a"
-                  href={launch.links.webcast}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  leftIcon={<IconBrandYoutube size={18} />}
-                  variant="filled"
-                  color="red"
-                >
-                  Watch Webcast
-                </Button>
+              {launch.links.flickr.original.length > 0 && (
+                <SimpleGrid cols={{ base: 3, xs: 3 }} mt="xs" spacing="xs">
+                  {launch.links.flickr.original.slice(0, 3).map((img, i) => (
+                    <Image
+                      key={i}
+                      src={img}
+                      alt={`Launch image ${i + 1}`}
+                      radius="sm"
+                      height={80}
+                    />
+                  ))}
+                </SimpleGrid>
               )}
 
-              {launch.links.article && (
-                <Button
-                  component="a"
-                  href={launch.links.article}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  leftIcon={<IconArticle size={18} />}
-                  variant="outline"
-                >
-                  Read Article
-                </Button>
-              )}
-            </Group>
-          </Paper>
-        </Grid.Col>
+              <Group position="center" mt="md" spacing={{ base: "xs", sm: "md" }}>
+                {launch.links.webcast && (
+                  <Button
+                    component="a"
+                    href={launch.links.webcast}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    leftIcon={<IconBrandYoutube size={18} />}
+                    variant="filled"
+                    color="red"
+                    size={{ base: "sm", sm: "md" }}
+                    fullWidth={true}
+                  >
+                    <MediaQuery smallerThan="xs" styles={{ display: "none" }}>
+                      <span>Watch Webcast</span>
+                    </MediaQuery>
+                    <MediaQuery largerThan="xs" styles={{ display: "none" }}>
+                      <span>Watch</span>
+                    </MediaQuery>
+                  </Button>
+                )}
 
-        <Grid.Col span={8}>
-          <Card withBorder p="md">
-            <Group position="apart" mb="md">
-              <Title>{launch.name}</Title>
-              {getStatusBadge()}
-            </Group>
+                {launch.links.article && (
+                  <Button
+                    component="a"
+                    href={launch.links.article}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    leftIcon={<IconArticle size={18} />}
+                    variant="outline"
+                    size={{ base: "sm", sm: "md" }}
+                    fullWidth={true}
+                  >
+                    <MediaQuery smallerThan="xs" styles={{ display: "none" }}>
+                      <span>Read Article</span>
+                    </MediaQuery>
+                    <MediaQuery largerThan="xs" styles={{ display: "none" }}>
+                      <span>Article</span>
+                    </MediaQuery>
+                  </Button>
+                )}
+              </Group>
+            </Paper>
+          </Grid.Col>
 
-            <Group mb="md">
-              <IconCalendar size={18} />
-              <Text>{formatDate(launch.date_utc)}</Text>
-            </Group>
+          {/* Details section - full width on mobile */}
+          <Grid.Col xs={12} md={8}>
+            <Card withBorder p={{ base: "xs", sm: "md" }}>
+              <Group position="apart" mb="md" align="flex-start" spacing="xs">
+                <Title order={1} size={{ base: "h3", sm: "h2" }}>
+                  {launch.name}
+                </Title>
+                {getStatusBadge()}
+              </Group>
 
-            <Text mb="lg">
-              {launch.details ||
-                "No detailed description available for this launch."}
-            </Text>
+              <Group mb="md" spacing="xs">
+                <IconCalendar size={18} />
+                <Text size={{ base: "sm", sm: "md" }}>
+                  {formatDate(launch.date_utc)}
+                </Text>
+              </Group>
 
-            <Divider my="md" label="Mission Details" labelPosition="center" />
+              <Text mb="lg" size={{ base: "sm", sm: "md" }}>
+                {launch.details ||
+                  "No detailed description available for this launch."}
+              </Text>
 
-            <Grid>
-              <Grid.Col span={6}>
-                <Card withBorder padding="sm" mb="md">
-                  <Group>
-                    <IconRocket size={18} />
-                    <Text weight={500}>Rocket</Text>
-                  </Group>
-                  {isLoadingRocket ? (
-                    <Loader size="sm" ml={26} mt="xs" />
-                  ) : rocket ? (
-                    <Group ml={26} mt="xs">
-                      <Text>{rocket.name}</Text>
-                      <Button
-                        component={Link}
-                        to={`/rockets/${rocket.id}`}
-                        size="xs"
-                        variant="subtle"
-                      >
-                        View Rocket
-                      </Button>
+              <Divider
+                my="md"
+                label="Mission Details"
+                labelPosition="center"
+              />
+
+              <Grid gutter={{ base: "xs", sm: "md" }}>
+                <Grid.Col xs={12} sm={6}>
+                  <Card withBorder padding="sm" mb="md">
+                    <Group>
+                      <IconRocket size={18} />
+                      <Text weight={500}>Rocket</Text>
                     </Group>
-                  ) : (
-                    <Text ml={26} color="dimmed" size="sm">
-                      Rocket information unavailable
-                    </Text>
-                  )}
-                </Card>
-
-                <Card withBorder padding="sm">
-                  <Group>
-                    <IconMap2 size={18} />
-                    <Text weight={500}>Launch Site</Text>
-                  </Group>
-                  {isLoadingLaunchpad ? (
-                    <Loader size="sm" ml={26} mt="xs" />
-                  ) : launchpad ? (
-                    <Stack ml={26} mt="xs" spacing={5}>
-                      <Text>{launchpad.name}</Text>
-                      <Text size="sm" color="dimmed">
-                        {launchpad.locality}, {launchpad.region}
+                    {isLoadingRocket ? (
+                      <Loader size="sm" ml={26} mt="xs" />
+                    ) : rocket ? (
+                      <Group ml={26} mt="xs" spacing="xs">
+                        <Text size={{ base: "sm", sm: "md" }}>{rocket.name}</Text>
+                        <Button
+                          component={Link}
+                          to={`/rockets/${rocket.id}`}
+                          size="xs"
+                          variant="subtle"
+                        >
+                          View Rocket
+                        </Button>
+                      </Group>
+                    ) : (
+                      <Text ml={26} color="dimmed" size="sm">
+                        Rocket information unavailable
                       </Text>
-                    </Stack>
-                  ) : (
-                    <Text ml={26} color="dimmed" size="sm">
-                      Launchpad information unavailable
+                    )}
+                  </Card>
+
+                  <Card withBorder padding="sm">
+                    <Group>
+                      <IconMap2 size={18} />
+                      <Text weight={500}>Launch Site</Text>
+                    </Group>
+                    {isLoadingLaunchpad ? (
+                      <Loader size="sm" ml={26} mt="xs" />
+                    ) : launchpad ? (
+                      <Stack ml={26} mt="xs" spacing={5}>
+                        <Text size={{ base: "sm", sm: "md" }}>{launchpad.name}</Text>
+                        <Text size="sm" color="dimmed">
+                          {launchpad.locality}, {launchpad.region}
+                        </Text>
+                      </Stack>
+                    ) : (
+                      <Text ml={26} color="dimmed" size="sm">
+                        Launchpad information unavailable
+                      </Text>
+                    )}
+                  </Card>
+                </Grid.Col>
+
+                <Grid.Col xs={12} sm={6}>
+                  <Card withBorder padding="sm" h="100%">
+                    <Text weight={500} mb="sm">
+                      Mission Status
                     </Text>
-                  )}
-                </Card>
-              </Grid.Col>
 
-              <Grid.Col span={6}>
-                <Card withBorder padding="sm" h="100%">
-                  <Text weight={500} mb="sm">
-                    Mission Status
-                  </Text>
-
-                  {launch.upcoming ? (
-                    <List spacing="xs" center>
-                      <List.Item
-                        icon={
-                          <ThemeIcon color="blue" size={20} radius="xl">
-                            <IconInfoCircle size={14} />
-                          </ThemeIcon>
-                        }
-                      >
-                        Mission is scheduled for future launch
-                      </List.Item>
-                      {launch.date_precision && (
-                        <List.Item>
-                          Date precision: {launch.date_precision}
+                    {launch.upcoming ? (
+                      <List spacing="xs" center size="sm">
+                        <List.Item
+                          icon={
+                            <ThemeIcon color="blue" size={20} radius="xl">
+                              <IconInfoCircle size={14} />
+                            </ThemeIcon>
+                          }
+                        >
+                          Mission is scheduled for future launch
                         </List.Item>
-                      )}
-                    </List>
-                  ) : launch.success ? (
-                    <List spacing="xs" center>
-                      <List.Item
-                        icon={
-                          <ThemeIcon color="green" size={20} radius="xl">
-                            <IconCircleCheck size={14} />
-                          </ThemeIcon>
-                        }
-                      >
-                        Mission completed successfully
-                      </List.Item>
-                    </List>
-                  ) : (
-                    <List spacing="xs" center>
-                      <List.Item
-                        icon={
-                          <ThemeIcon color="red" size={20} radius="xl">
-                            <IconCircleX size={14} />
-                          </ThemeIcon>
-                        }
-                      >
-                        Mission failed
-                      </List.Item>
-                      {launch.failures &&
-                        launch.failures.length > 0 &&
-                        launch.failures.map((failure, idx) => (
-                          <List.Item key={idx}>{failure.reason}</List.Item>
-                        ))}
-                    </List>
-                  )}
-                </Card>
-              </Grid.Col>
-            </Grid>
+                        {launch.date_precision && (
+                          <List.Item>
+                            Date precision: {launch.date_precision}
+                          </List.Item>
+                        )}
+                      </List>
+                    ) : launch.success ? (
+                      <List spacing="xs" center size="sm">
+                        <List.Item
+                          icon={
+                            <ThemeIcon color="green" size={20} radius="xl">
+                              <IconCircleCheck size={14} />
+                            </ThemeIcon>
+                          }
+                        >
+                          Mission completed successfully
+                        </List.Item>
+                      </List>
+                    ) : (
+                      <List spacing="xs" center size="sm">
+                        <List.Item
+                          icon={
+                            <ThemeIcon color="red" size={20} radius="xl">
+                              <IconCircleX size={14} />
+                            </ThemeIcon>
+                          }
+                        >
+                          Mission failed
+                        </List.Item>
+                        {launch.failures &&
+                          launch.failures.length > 0 &&
+                          launch.failures.map((failure, idx) => (
+                            <List.Item key={idx}>{failure.reason}</List.Item>
+                          ))}
+                      </List>
+                    )}
+                  </Card>
+                </Grid.Col>
+              </Grid>
 
-            <Divider my="md" label="External Links" labelPosition="center" />
+              <Divider
+                my="md"
+                label="External Links"
+                labelPosition="center"
+              />
 
-            <SimpleGrid cols={3}>
-              {launch.links.reddit.campaign && (
-                <Button
-                  component="a"
-                  href={launch.links.reddit.campaign}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  variant="light"
-                >
-                  Reddit Campaign
-                </Button>
-              )}
+              <SimpleGrid 
+                cols={{ base: 1, xs: 2, sm: 3 }}
+                spacing={{ base: "xs", sm: "md" }}
+              >
+                {launch.links.reddit.campaign && (
+                  <Button
+                    component="a"
+                    href={launch.links.reddit.campaign}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    variant="light"
+                    size={{ base: "xs", sm: "sm" }}
+                    fullWidth
+                  >
+                    Reddit Campaign
+                  </Button>
+                )}
 
-              {launch.links.wikipedia && (
-                <Button
-                  component="a"
-                  href={launch.links.wikipedia}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  variant="light"
-                >
-                  Wikipedia
-                </Button>
-              )}
+                {launch.links.wikipedia && (
+                  <Button
+                    component="a"
+                    href={launch.links.wikipedia}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    variant="light"
+                    size={{ base: "xs", sm: "sm" }}
+                    fullWidth
+                  >
+                    Wikipedia
+                  </Button>
+                )}
 
-              {launch.links.presskit && (
-                <Button
-                  component="a"
-                  href={launch.links.presskit}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  variant="light"
-                >
-                  Press Kit
-                </Button>
-              )}
-            </SimpleGrid>
-          </Card>
-        </Grid.Col>
-      </Grid>
-    </Stack>
+                {launch.links.presskit && (
+                  <Button
+                    component="a"
+                    href={launch.links.presskit}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    variant="light"
+                    size={{ base: "xs", sm: "sm" }}
+                    fullWidth
+                  >
+                    Press Kit
+                  </Button>
+                )}
+              </SimpleGrid>
+            </Card>
+          </Grid.Col>
+        </Grid>
+      </Stack>
+    </Container>
   );
 }

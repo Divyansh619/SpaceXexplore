@@ -28,8 +28,6 @@ import { getRockets, getLaunches } from "../../api/spacex";
 import RocketCard from "../rockets/RocketCard";
 import { LaunchCard } from "../launches/LaunchCard";
 
-// import { LaunchCard } from '../launches/LaunchCard';
-
 export function DashboardPage() {
   const navigate = useNavigate();
 
@@ -200,13 +198,13 @@ export function DashboardPage() {
       </SimpleGrid>
 
       <Grid>
-        <Grid.Col span={6}>
+        <Grid.Col span={12} md={6}>
           <Paper withBorder p="md">
             <Group position="apart" mb="md">
               <Title order={3}>Latest Rockets</Title>
               <Button
                 variant="subtle"
-                onClick={() => navigate("/launches")}
+                onClick={() => navigate("/rockets")}
                 rightIcon={<IconArrowRight size={16} />}
               >
                 View All
@@ -225,7 +223,7 @@ export function DashboardPage() {
           </Paper>
         </Grid.Col>
 
-        <Grid.Col span={6}>
+        <Grid.Col span={12} md={6}>
           <Paper withBorder p="md">
             <Group position="apart" mb="md">
               <Title order={3}>Recent Launches</Title>
