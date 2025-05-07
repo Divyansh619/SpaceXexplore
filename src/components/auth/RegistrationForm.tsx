@@ -70,6 +70,11 @@ export default function RegistrationForm({ onToggleForm }: RegisterFormProps) {
           placeholder="John Doe"
           {...form.getInputProps("name")}
           mb="md"
+          styles={{
+            label: {
+              color: "black",
+            },
+          }}
         />
 
         <TextInput
@@ -78,22 +83,39 @@ export default function RegistrationForm({ onToggleForm }: RegisterFormProps) {
           placeholder="your@email.com"
           {...form.getInputProps("email")}
           mb="md"
+          styles={{
+            label: {
+              color: "black",
+            },
+          }}
         />
 
-        <PasswordInput
+        <TextInput
+          type="password"
           withAsterisk
           label="Password"
           placeholder="Your password"
           {...form.getInputProps("password")}
           mb="md"
+          styles={{
+            label: {
+              color: "black",
+            },
+          }}
         />
 
-        <PasswordInput
+        <TextInput
+          type="password"
           withAsterisk
           label="Confirm Password"
           placeholder="Confirm your password"
           {...form.getInputProps("confirmPassword")}
           mb="xl"
+          styles={{
+            label: {
+              color: "black",
+            },
+          }}
         />
 
         <Button type="submit" fullWidth loading={isLoading}>

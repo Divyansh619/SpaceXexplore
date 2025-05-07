@@ -9,7 +9,7 @@ import {
   Text,
   useMantineTheme,
 } from "@mantine/core";
-import { IconRocket } from '@tabler/icons-react';
+import { IconRocket } from "@tabler/icons-react";
 
 import { useAppStore } from "../../store/app.store";
 import RegistrationForm from "../../components/auth/RegistrationForm";
@@ -27,44 +27,68 @@ const AuthPage = () => {
   const toggleForm = () => setIsLogin(!isLogin);
 
   return (
-    <Container size="lg" style={{ height: "100vh" }}>
-      <Flex
-        direction={{ base: "column", md: "row" }}
-        gap="lg"
-        align="center"
-        justify="center"
-        style={{ height: "100%" }}
+    <div
+      style={{
+        backgroundImage:
+          'url("https://wallpapercat.com/w/full/7/3/6/1278091-3840x2160-desktop-4k-starship-wallpaper.jpg")',
+        backgroundSize: "cover",
+        backgroundPosition: "center top",
+        minHeight: "100vh",
+        width: "100%",
+        position: "relative",
+      }}
+    >
+      <div
+        style={{
+          backdropFilter: "blur(8px)",
+          backgroundColor: "rgba(0, 0, 0, 0.4)",
+          width: "100%",
+          minHeight: "100vh",
+          paddingTop: "2rem",
+          paddingBottom: "2rem",
+        }}
       >
-        <Stack 
-          style={{ flex: 1, maxWidth: "400px" }} 
-          justify="center" 
-          spacing="xl"
-          align="center"
-        >
-          <IconRocket size={64} color={theme.colors.blue[6]} stroke={1.5} />
-          <Title align="center">SpaceX Explorer</Title>
-          <Text size="lg" align="center">
-            Discover the fascinating world of SpaceX rockets and launches. Sign
-            in to access detailed information, track launches, and explore the
-            SpaceX mission archive.
-          </Text>
-        </Stack>
+        <Container size="lg" style={{ height: "100%" }}>
+          <Flex
+            direction={{ base: "column", md: "row" }}
+            gap="lg"
+            align="center"
+            justify="center"
+            style={{ minHeight: "calc(100vh - 4rem)" }} 
+          >
+            <Stack
+              style={{ flex: 1, maxWidth: "400px", textAlign: "center" }}
+              justify="center"
+              spacing="lg"
+              align="center"
+            >
+              <IconRocket size={64} color={theme.colors.blue[6]} stroke={1.5} />
+              <Title align="center" c="white">SpaceX Explorer</Title>
+              <Text size="md" align="center" c="gray.3">
+                Discover the fascinating world of SpaceX rockets and launches.
+                Sign in to access detailed information, track launches, and
+                explore the SpaceX mission archive.
+              </Text>
+            </Stack>
 
-        <Paper 
-          style={{ flex: 1, maxWidth: "400px" }} 
-          shadow="md" 
-          p={30} 
-          radius="md" 
-          withBorder
-        >
-          {isLogin ? (
-            <LoginForm onToggleForm={toggleForm} />
-          ) : (
-            <RegistrationForm onToggleForm={toggleForm} />
-          )}
-        </Paper>
-      </Flex>
-    </Container>
+            <Paper
+              style={{ flex: 1, maxWidth: "400px", width: "100%" }}
+              shadow="md"
+              p={30}
+              radius="md"
+              withBorder
+              bg="white"
+            >
+              {isLogin ? (
+                <LoginForm onToggleForm={toggleForm} />
+              ) : (
+                <RegistrationForm onToggleForm={toggleForm} />
+              )}
+            </Paper>
+          </Flex>
+        </Container>
+      </div>
+    </div>
   );
 };
 

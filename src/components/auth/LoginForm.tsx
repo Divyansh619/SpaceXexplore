@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   TextInput,
-  PasswordInput,
   Button,
   Group,
   Box,
@@ -12,7 +11,7 @@ import {
   Alert,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { IconAlertCircle } from '@tabler/icons-react';
+import { IconAlertCircle } from "@tabler/icons-react";
 import { useAppStore } from "../../store/app.store";
 
 interface LoginFormProps {
@@ -43,12 +42,12 @@ export default function LoginForm({ onToggleForm }: LoginFormProps) {
   return (
     <Box mx="auto">
       <Text size="lg" fw={500} ta="center" mb="md">
-        Welcome back to SpaceX Explorer
+      Starlink Station
       </Text>
 
       {error && (
         <Alert
-           icon={<IconAlertCircle size={16} />}
+          icon={<IconAlertCircle size={16} />}
           title="Error"
           color="red"
           mb="md"
@@ -65,14 +64,25 @@ export default function LoginForm({ onToggleForm }: LoginFormProps) {
           placeholder="your@email.com"
           {...form.getInputProps("email")}
           mb="md"
+          styles={{
+            label: {
+              color: "black",
+            },
+          }}
         />
 
-        <PasswordInput
+        <TextInput
           withAsterisk
+          type="password"
           label="Password"
           placeholder="Your password"
           {...form.getInputProps("password")}
           mb="xl"
+          styles={{
+            label: {
+              color: "black",
+            },
+          }}
         />
 
         <Button type="submit" fullWidth loading={isLoading}>
@@ -88,10 +98,6 @@ export default function LoginForm({ onToggleForm }: LoginFormProps) {
           Register
         </Anchor>
       </Text>
-
-      {/* <Text size="xs" c="dimmed" ta="center" mt="sm">
-        Demo credentials: demo@example.com / password123
-      </Text> */}
     </Box>
   );
 }

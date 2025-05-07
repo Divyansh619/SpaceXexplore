@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import {
   AppShell,
@@ -14,7 +14,6 @@ import {
   MediaQuery,
   ActionIcon,
   Box,
-  Overlay,
 } from "@mantine/core";
 import { IconLogout, IconRocket, IconX } from "@tabler/icons-react";
 import { useAppStore } from "../../store/app.store";
@@ -25,6 +24,21 @@ export const AppLayout = () => {
   const { user, logout } = useAppStore();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (opened) {
+      // Disable scrolling when the sidebar is open
+      document.body.style.overflow = 'hidden';
+    } else {
+      // Enable scrolling when the sidebar is closed
+      document.body.style.overflow = '';
+    }
+
+    // Cleanup the effect when the component is unmounted
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [opened]);
+
   return (
     <AppShell
       padding="md"
@@ -32,7 +46,7 @@ export const AppLayout = () => {
       asideOffsetBreakpoint="sm"
       navbar={
         <>
-          {/* Desktop Navbar - user name removed */}
+          {/* Desktop Navbar */}
           <MediaQuery smallerThan="sm" styles={{ display: "none" }}>
             <Navbar
               p="md"
@@ -40,7 +54,6 @@ export const AppLayout = () => {
               hiddenBreakpoint="sm"
               hidden={!opened}
               style={{ zIndex: 200 }}
-          
             >
               <Navbar.Section grow>
                 <MainNavigation />
@@ -64,7 +77,7 @@ export const AppLayout = () => {
                   zIndex: 999,
                 }}
               />
-              
+
               {/* Sidebar */}
               <MediaQuery largerThan="sm" styles={{ display: "none" }}>
                 <Box
@@ -78,6 +91,8 @@ export const AppLayout = () => {
                     zIndex: 1000,
                     boxShadow: "2px 0 12px rgba(0, 0, 0, 0.2)",
                     padding: "1rem",
+                    display: "flex",
+                    flexDirection: "column",
                   }}
                 >
                   <Group position="right" mb="sm">
@@ -85,18 +100,44 @@ export const AppLayout = () => {
                       <IconX size={20} />
                     </ActionIcon>
                   </Group>
+
+                  {/* Main Navigation */}
                   <Navbar.Section grow>
                     <MainNavigation />
                   </Navbar.Section>
-                  <Navbar.Section mt="md">
-                    <Group>
-                      <Avatar color="blue" radius="xl">
-                        {user?.name.charAt(0) || "U"}
-                      </Avatar>
-                      <Text size="sm" fw={500}>
-                        {user?.name || "User"}
-                      </Text>
-                    </Group>
+
+                  {/* User name at the bottom */}
+                  <Navbar.Section style={{ marginTop: "auto" }}>
+                    {/* Menu with Logout Option */}
+                    <Menu position="bottom-end" shadow="md" width={200}>
+                      <Menu.Target>
+                        <UnstyledButton>
+                          <Group>
+                            <Avatar color="blue" radius="xl">
+                              {user?.name.charAt(0) || "U"}
+                            </Avatar>
+                            <div style={{ flex: 1 }}>
+                              <Text size="sm" fw={500}>
+                                {user?.name || "User"}
+                              </Text>
+                              <Text c="dimmed" size="xs">
+                                {user?.email || ""}
+                              </Text>
+                            </div>
+                          </Group>
+                        </UnstyledButton>
+                      </Menu.Target>
+                      <Menu.Dropdown>
+                        <Menu.Label>Account</Menu.Label>
+                        <Menu.Item
+                          color="red"
+                          icon={<IconLogout size={14} />}
+                          onClick={logout}
+                        >
+                          Logout
+                        </Menu.Item>
+                      </Menu.Dropdown>
+                    </Menu>
                   </Navbar.Section>
                 </Box>
               </MediaQuery>
@@ -106,12 +147,7 @@ export const AppLayout = () => {
       }
       header={
         <Header height={60} style={{ zIndex: 201 }}>
-          <Group
-            h="100%"
-            px={{ base: 10, sm: 20 }}
-            position="apart"
-            align="center"
-          >
+          <Group h="100%" px={{ base: 10, sm: 20 }} position="apart" align="center">
             <Group>
               {/* Hamburger in Header on Mobile */}
               <MediaQuery largerThan="sm" styles={{ display: "none" }}>
